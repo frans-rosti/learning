@@ -32,6 +32,7 @@ def player_one_choice():
 	player_input()
 
 
+	
 # Starts the game.
 def game_start():
 
