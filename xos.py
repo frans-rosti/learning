@@ -54,6 +54,9 @@ def display_board():
 	print(" {seven} | {eight} | {nine} ".format(seven=board_locations[7],eight=board_locations[8],nine=board_locations[9]))
 	print("   |   |   ")
 
+valid_choices = [1,2,3,4,5,6,7,8,9]
+valids_stringed = ["1","2","3","4","5","6","7","8","9"]
+
 # This one is long and ugly, takes player's input (depending on whose turn it is) and places it on the board.
 # Big Problem: if a user inputs anything other than a number from 1-9, the game breaks.
 def player_input():
@@ -63,6 +66,7 @@ def player_input():
 	global total_turns
 	global p1_choice
 	global p2_choice
+	global valid_choices
 
 	print(" ")
 	print(" ")
@@ -80,52 +84,53 @@ def player_input():
 
 	turn_going = False
 
-	pchoice = 0
+	print(f"Player {turn_counter}, make your choice:")
+	pchoice = input()
 
-	# The player chooses a number from 1 to 9 and their sign is placed on the board in that location.
-	# turn_counter is used to determine who's turn it is - 1 means player one, 2 means player two.
-	if turn_counter == 1:
-		pchoice = 0
-		print("Player One, make your choice:")
-		pchoice = int(input())
+	if pchoice in valids_stringed:
+		if turn_counter == 1:
 
-		turn_going = True
+			pchoice = int(pchoice)
 
-		while turn_going == True and turn_counter == 1:
-			if board_locations[pchoice] == "X":
-				print("Oops! Choose a different section.")
-				player_input()
-			elif board_locations[pchoice] =="O":
-				print("Oops! Choose a different section.")
-				player_input()
-			else:
-				board_locations[pchoice] = p1_choice
-				turn_counter = 2
-				total_turns += 1
-				turn_going == False
-				win_check()
+			turn_going = True
 
-	# This is used if it is player two's turn.
-	elif turn_counter == 2:
-		pchoice = 0
-		print("Player Two, make your choice:")
-		pchoice = int(input())
+			while turn_going == True and turn_counter == 1:
+				if board_locations[pchoice] == "X":
+					print("\n\nOops! Choose a different section.")
+					player_input()
+				elif board_locations[pchoice] =="O":
+					print("\n\nOops! Choose a different section.")
+					player_input()
+				else:
+					board_locations[pchoice] = p1_choice
+					turn_counter = 2
+					total_turns += 1
+					turn_going == False
+					win_check()
 
-		turn_going = True
+		# This is used if it is player two's turn.
+		elif turn_counter == 2:
 
-		while turn_going == True and turn_counter == 2:
-			if board_locations[pchoice] == "X":
-				print("Oops! Choose a different section.")
-				player_input()
-			elif board_locations[pchoice] =="O":
-				print("Oops! Choose a different section.")
-				player_input()
-			else:
-				board_locations[pchoice] = p2_choice
-				turn_counter = 1
-				total_turns += 1
-				turn_going == False
-				win_check()
+			pchoice = int(pchoice)
+
+			turn_going = True
+
+			while turn_going == True and turn_counter == 2:
+				if board_locations[pchoice] == "X":
+					print("\n\nOops! Choose a different section.")
+					player_input()
+				elif board_locations[pchoice] =="O":
+					print("\n\nOops! Choose a different section.")
+					player_input()
+				else:
+					board_locations[pchoice] = p2_choice
+					turn_counter = 1
+					total_turns += 1
+					turn_going == False
+					win_check()
+	else:
+		print("\n\nINVALID INPUT! Please enter a number from 1-9!")
+		player_input()
 
 winner = ""
 
